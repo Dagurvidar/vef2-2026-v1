@@ -37,7 +37,7 @@ function generateQuestionHtml(q) {
   return html;
 }
 
-function createCategorySites(questions) {
+async function createCategorySites(questions) {
   const easyHistoryQuestions = questions
     .filter((q) => q.categoryNumber === "4" && q.difficulty === "1")
     .slice(0, MAX_QUESTIONS_PER_CATEGORY);
@@ -64,27 +64,27 @@ function createCategorySites(questions) {
 
   var output = easyHistoryQuestions.map(generateQuestionHtml).join("\n");
   var path = "./dist/saga.html";
-  fs.writeFile(path, output, "utf-8");
+  await fs.writeFile(path, output, "utf-8");
 
   output = easyMusicQuestions.map(generateQuestionHtml).join("\n");
   path = "./dist/tonlist.html";
-  fs.writeFile(path, output, "utf-8");
+  await fs.writeFile(path, output, "utf-8");
 
   output = easyGeoQuestions.map(generateQuestionHtml).join("\n");
   path = "./dist/lond.html";
-  fs.writeFile(path, output, "utf-8");
+  await fs.writeFile(path, output, "utf-8");
 
   output = easyLitQuestions.map(generateQuestionHtml).join("\n");
   path = "./dist/bokmenntir.html";
-  fs.writeFile(path, output, "utf-8");
+  await fs.writeFile(path, output, "utf-8");
 
   output = easyStemQuestions.map(generateQuestionHtml).join("\n");
   path = "./dist/visindi.html";
-  fs.writeFile(path, output, "utf-8");
+  await fs.writeFile(path, output, "utf-8");
 
   output = easyGameQuestions.map(generateQuestionHtml).join("\n");
   path = "./dist/leikir.html";
-  fs.writeFile(path, output, "utf-8");
+  await fs.writeFile(path, output, "utf-8");
 }
 
 async function main() {
@@ -94,7 +94,7 @@ async function main() {
 
   const questions = lines.map(parseLine);
 
-  createCategorySites(questions);
+  await createCategorySites(questions);
 }
 
 //keyrir main með try-catch
