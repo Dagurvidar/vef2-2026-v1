@@ -37,13 +37,7 @@ function generateQuestionHtml(q) {
   return html;
 }
 
-async function main() {
-  const content = await fs.readFile("./questions.csv", "utf-8");
-
-  const lines = content.split("\n");
-
-  const questions = lines.map(parseLine);
-
+function createCategorySites(questions) {
   const easyHistoryQuestions = questions
     .filter((q) => q.categoryNumber === "4" && q.difficulty === "1")
     .slice(0, MAX_QUESTIONS_PER_CATEGORY);
@@ -68,8 +62,6 @@ async function main() {
     .filter((q) => q.subcategory === "Tölvur og tækni" && q.difficulty === "1")
     .slice(0, MAX_QUESTIONS_PER_CATEGORY);
 
-  console.log(easyHistoryQuestions);
-
   var output = easyHistoryQuestions.map(generateQuestionHtml).join("\n");
   var path = "./dist/saga.html";
   fs.writeFile(path, output, "utf-8");
@@ -93,6 +85,16 @@ async function main() {
   output = easyGameQuestions.map(generateQuestionHtml).join("\n");
   path = "./dist/leikir.html";
   fs.writeFile(path, output, "utf-8");
+}
+
+async function main() {
+  const content = await fs.readFile("./questions.csv", "utf-8");
+
+  const lines = content.split("\n");
+
+  const questions = lines.map(parseLine);
+
+  createCategorySites(questions);
 }
 
 //keyrir main með try-catch
