@@ -1,27 +1,7 @@
 import fs from "node:fs/promises";
+import { parseLine } from "../src/lib/parse.js";
 
 const MAX_QUESTIONS_PER_CATEGORY = 30;
-
-function parseLine(line) {
-  const split = line.split(",");
-  const categoryNumber = split[0];
-  const subcategory = split[1];
-  const difficulty = split[2];
-  const quality = split[3];
-  const question = split[4];
-  const answer = split[5];
-
-  const q = {
-    categoryNumber,
-    subcategory,
-    difficulty,
-    quality,
-    question,
-    answer,
-  };
-
-  return q;
-}
 
 /**
  *
@@ -38,6 +18,8 @@ function generateQuestionHtml(q) {
 }
 
 async function createCategorySites(questions) {
+  questions = questions.filter((q) => q !== null);
+
   const easyHistoryQuestions = questions
     .filter((q) => q.categoryNumber === "4" && q.difficulty === "1")
     .slice(0, MAX_QUESTIONS_PER_CATEGORY);
