@@ -55,7 +55,7 @@ async function createCategorySites(questions) {
       (q) =>
         q.categoryNumber === "2" &&
         q.difficulty === "1" &&
-        q.subcategory !== "Stærðfræði"
+        q.subcategory !== "Stærðfræði",
     )
     .slice(0, MAX_QUESTIONS_PER_CATEGORY);
   const easyGameQuestions = questions
@@ -88,6 +88,10 @@ async function createCategorySites(questions) {
 }
 
 async function main() {
+  //búa til .dist möppu ef ekki til
+  const distPath = "./dist";
+  await fs.mkdir(distPath);
+
   const content = await fs.readFile("./questions.csv", "utf-8");
 
   const lines = content.split("\n");
